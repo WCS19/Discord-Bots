@@ -5,7 +5,7 @@ As a frequent user of discord I wanted to create a variety of discord bots that 
 ## Overview of Bots
 
 - **Initial Test Bot**: A basic bot setup to test server connection and command message parsing.
-- **Multi-Function Bot**: A versatile bot integrating various features for server management, user engagement, and more.
+- **Multi-Function Bot**: This bot enhances server interaction through a suite of focused features, including current weather reports via the OpenWeatherMap API, interactive polls for community decisions, and  welcome messages for new members.
 - **Reminder Bot**: Capable or creating, deleting, and storing scheduled reminders each with unique IDs for logging and reminder storage management.
 - **Music-Test Bot**: An experimental bot designed to test music playback features within Discord.
 - **Music-YouTube Bot**: Streams music from YouTube to Discord voice channels.
@@ -17,7 +17,7 @@ Before setting up the bots, ensure you have the following:
 
 - [Python](https://www.python.org/downloads/) (3.8 or newer recommended)
 - [pip](https://pip.pypa.io/en/stable/installation/) for managing Python packages
-- A Discord account and access to a server where you can add bots
+- A [Discord Account](https://discord.com/), [Discord Developer Portal Account](https://discord.com/developers/docs/intro), and access to a server where you can add bots
 
 ## Installation
 
@@ -46,9 +46,16 @@ brew install ffmpeg
 brew install opus
 ```
 ### Step 3: Configure Enviornment Variables
+Create a .env file and populate the following fields:
 ```.txt
-DISCORD_TOKEN = <Your_Discord_Bot_TOKEN>
+DISCORD_TOKEN = <Your-Discord-Bot-TOKEN>
 ```
+*The Discord Token is required for all bots.*
+
+```.txt
+OPENWEATHER_API_KEY = <Your-OpenWeatherMap-APIKEY>
+```
+*The OpenWeatherMAP API Key is only required for the multi-function bot.*
 
 ### Step 4: Invite Bot/s to Your Server
 
