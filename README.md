@@ -1,6 +1,6 @@
 # Custom Discord Bots
 
-As a frequent user of discord I wanted to create a variety of discord bots that have different and unique functionality. This repository contains a collection of custom Discord bots that I am working on, each designed with unique functionalities aimed at enhancing Discord's server experience. The bots include an initial test bot for basic operations/an initial setup, a multi-function bot(weather, reminders, & polls), a reminder bot, and a youtube audio bot. This README will guide you through the setup, configuration, and usage of these bots.
+As a frequent user of discord I wanted to create a variety of discord bots that have different and unique functionality. This repository contains a collection of custom Discord bots that I am working on, each designed with unique functionalities aimed at enhancing Discord's server experience. The bots include an initial test bot for basic operations/an initial setup, a multi-function bot(weather, welcome messages, & polls), a reminder bot, and a youtube audio bot. This README will guide you through the setup, configuration, and usage of these bots.
 
 ## Overview of Bots
 
