@@ -1,17 +1,17 @@
 import os
 import discord
-from dotenv import load_dotenv
 import requests
+from dotenv import load_dotenv
 from datetime import datetime
-import asyncio
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')  
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 intents = discord.Intents.default()
-intents.messages = True 
-intents.message_content = True  
-intents.reactions = True 
+intents.messages = True
+intents.message_content = True
+intents.reactions = True
+intents.members = True  
 
 client = discord.Client(intents=intents)
 
@@ -21,12 +21,10 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print(f"Received message from {message.author}: {message.content}")  # Debug print
     if message.author == client.user:
         return
 
     if message.content.startswith('!hello') or message.content.startswith('hello'):
-        print("Match found for '!hello/hello', sending response...")  # Debug print
         await message.channel.send('Hello! I am a test bot.')
 
     elif message.content.startswith('!weather'):
@@ -37,15 +35,18 @@ async def on_message(message):
         options = message.content.split(' ')[1:]
         await create_poll(message.channel, options)
 
-    # elif message.content.startswith('!reminder'):
-    #     parts = message.content.split(' ', 2)
-    #     time_str = parts[1]
-    #     reminder_msg = parts[2]
-    #     await set_reminder(message.channel, time_str, reminder_msg)
+#Welcome message function
+@client.event
+async def on_member_join(member):
+    welcome_channel_id = os.getenv('CHANNEL_ID') 
+    welcome_message = f"Welcome to the server, {member.mention}! Feel free to introduce yourself."
+    channel = client.get_channel(welcome_channel_id)
+    if channel:
+        await channel.send(welcome_message)
 
 #Weather function
 async def get_weather(channel, city):
-    api_key = os.getenv('OPENWEATHER_API_KEY')
+    api_key = os.getenv('OPENWEATHERMAP_API_KEY')
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=imperial'
     response = requests.get(url)
     data = response.json()
@@ -56,9 +57,11 @@ async def get_weather(channel, city):
         humidity = data['main']['humidity']
         wind_speed_mph = round(data['wind']['speed'])
 
-        await channel.send(f'The weather in {city} is {weather_desc}. '
-                           f'Temperature: {temp_fahrenheit}°F (Feels like: {feels_like_fahrenheit}°F), '
-                           f'Humidity: {humidity}%, Wind Speed: {wind_speed_mph} mph')
+        await channel.send(f'{city} weather is currently {weather_desc}. '
+                           f'The current temperature is {temp_fahrenheit}°F and feels like {feels_like_fahrenheit}°F. '
+                           f'Current humidity is {humidity}%, with wind speeds of {wind_speed_mph} mph.')
+    else:
+        await channel.send(f'Error: Unable to retrieve weather for "{city}".')
 
 #Poll function
 async def create_poll(channel, options):
@@ -73,18 +76,7 @@ async def create_poll(channel, options):
     for i in range(len(options)):
         await poll_message.add_reaction(chr(127462 + i))
 
-#Reminder function (still working on)
-# async def set_reminder(channel, time_str, reminder_msg):
-#     try:
-#         reminder_time = datetime.strptime(time_str, '%Y-%m-%d %H:%M')
-#         now = datetime.now()
-#         if reminder_time <= now:
-#             await channel.send('Reminder time must be in the future')
-#             return
-#         delta = (reminder_time - now).total_seconds()
-#         await asyncio.sleep(delta)
-#         await channel.send(f'Reminder: {reminder_msg}')
-#     except ValueError:
-#         await channel.send('Invalid time format. Please use YYYY-MM-DD HH:MM')
+
+
 
 client.run(TOKEN)
