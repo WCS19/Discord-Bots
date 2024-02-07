@@ -28,7 +28,7 @@ Follow these steps to get the bots up and running on your server:
 Clone this repository to your local machine using:
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/WCS19/discordbot>
 ```
 
 ### Step 2: Install Dependencies
