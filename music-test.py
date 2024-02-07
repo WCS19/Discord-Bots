@@ -20,7 +20,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f'{bot.user.name} has connected to Discord!')
+    print(f'{bot.user.name} is now online.')
 #this works just bad quality
 # @bot.command(name='play', help='Plays a selected piece of music from YouTube')
 # async def play(ctx, *, search: str):
