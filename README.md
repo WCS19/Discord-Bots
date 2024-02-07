@@ -57,6 +57,11 @@ OPENWEATHER_API_KEY = <Your-OpenWeatherMap-APIKEY>
 ```
 *The OpenWeatherMAP API Key is only required for the multi-function bot.*
 
+```.txt
+OPUS_LIBRARY = <filepath/to/your/opus/library/>
+```
+*The Music-YT bot is the only bot using the Opus library*
+
 ### Step 4: Invite Bot/s to Your Server
 
 For each bot, you need to invite them to your Discord server. Use the Discord Developer 

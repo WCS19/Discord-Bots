@@ -5,7 +5,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 #Load opus library
-discord.opus.load_opus('/opt/homebrew/opt/opus/lib/libopus.dylib')
+filepath = os.getenv('OPUS_LIBRARY')
+discord.opus.load_opus(filepath)
 
 
 load_dotenv()
