@@ -1,13 +1,14 @@
 # Custom Discord Bots
 
-As a frequent user of discord I wanted to create a variety of discord bots that have different and unique functionality. This repository contains a collection of custom Discord bots that I am continuing to work on, each designed with unique functionalities aimed at enhancing Discord server's experience. The bots include an initial test bot for basic operations/an initial setup, a multi-function bot(weather, reminders, & polls), and a youtube audio bot. This README will guide you through the setup, configuration, and usage of these bots.
+As a frequent user of discord I wanted to create a variety of discord bots that have different and unique functionality. This repository contains a collection of custom Discord bots that I am working on, each designed with unique functionalities aimed at enhancing Discord's server experience. The bots include an initial test bot for basic operations/an initial setup, a multi-function bot(weather, reminders, & polls), a reminder bot, and a youtube audio bot. This README will guide you through the setup, configuration, and usage of these bots.
 
 ## Overview of Bots
 
-- **Initial Test Bot**: A basic bot setup to demonstrate fundamental Discord bot functionalities.
+- **Initial Test Bot**: A basic bot setup to test server connection and command message parsing.
 - **Multi-Function Bot**: A versatile bot integrating various features for server management, user engagement, and more.
+- **Reminder Bot**: Capable or creating, deleting, and storing scheduled reminders each with unique IDs for logging and reminder storage management.
 - **Music-Test Bot**: An experimental bot designed to test music playback features within Discord.
-- **Music-YouTube Bot**: Streams music from YouTube to Discord voice channels, providing an enhanced musical experience.
+- **Music-YouTube Bot**: Streams music from YouTube to Discord voice channels.
 
 
 ## Prerequisites
@@ -28,12 +29,21 @@ Follow these steps to get the bots up and running on your server:
 Clone this repository to your local machine using:
 
 ```bash
-git clone <https://github.com/WCS19/discordbot>
+git clone https://github.com/WCS19/discordbot
 ```
 
 ### Step 2: Install Dependencies
 ```bash
 pip install -r requirements.txt
+```
+
+For the music-yt bot, FFmpeg and Opus are required for audio processing and voice support in Discord bots. Since these cannot be installed via `pip`, MacOS users can install FFmpeg and Opus using Homebrew.
+
+```bash
+brew install ffmpeg
+```
+```bash
+brew install opus
 ```
 ### Step 3: Configure Enviornment Variables
 ```.txt
