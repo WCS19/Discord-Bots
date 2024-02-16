@@ -18,13 +18,13 @@ intents.message_content = True
 intents.guilds = True
 intents.voice_states = True
 
-bot = commands.Bot(command_prefix='!', intents=intents)
+client = commands.Bot(command_prefix='!', intents=intents)
 
-@bot.event
+@client.event
 async def on_ready():
-    print(f'{bot.user.name} is now online.')
+    print(f'{client.user.name} is now online.')
 
-@bot.command(name='play', help='Plays a selected piece of music from YouTube')
+@client.command(name='play', help='Plays a selected piece of music from YouTube')
 async def play(ctx, *, search: str):
     if not ctx.message.author.voice:
         await ctx.send("You are not connected to a voice channel")
@@ -51,4 +51,8 @@ async def play(ctx, *, search: str):
         ctx.voice_client.play(discord.FFmpegPCMAudio(URL), after=lambda e: print(f'Player error: {e}') if e else None)
         await ctx.send(f'Now playing: {info["title"]}')
 
-bot.run(TOKEN)
+def run_bot():
+    client.run(TOKEN)
+
+if __name__ == '__main__':
+    run_bot()
