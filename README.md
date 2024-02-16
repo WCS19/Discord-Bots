@@ -9,6 +9,7 @@ As a frequent user of discord I wanted to create a variety of discord bots that 
 - **Reminder Bot**: Capable or creating, deleting, and storing scheduled reminders each with unique IDs for logging and reminder storage management.
 - **Music-Test Bot**: An experimental bot designed to test music playback features within Discord.
 - **Music-YouTube Bot**: Streams music from YouTube to Discord voice channels.
+- **Ticket Management Bot**: Aids discord admins in the creation, resolution, and management of discord sever support tickets. 
 
 
 ## Prerequisites
