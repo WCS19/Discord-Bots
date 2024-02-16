@@ -60,7 +60,7 @@ CHNNEL_ID = <Your-General-Channel-ID>
 ```
 
 ```.txt
-ADMIN_CHANNEL_ID = <Your-Admin-Only-Discord-Channel>
+ADMIN_CHANNEL_ID = <Your-Admin-Only-Discord-Channel-ID>
 ```
 
 ```.txt
