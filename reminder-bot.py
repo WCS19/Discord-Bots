@@ -23,7 +23,7 @@ intents.message_content = True
 intents.reactions = True
 client = commands.Bot(command_prefix='!', intents=intents)
 
-# Disable the default help command
+#Disable the default help command
 client.remove_command('help')
 
 class Reminder:
@@ -35,42 +35,6 @@ class Reminder:
 
 reminders = {}  #empty dictionary to store reminders
 
-
-async def remind(channel, reminder):
-    await asyncio.sleep((reminder.time - datetime.now()).total_seconds())
-    await channel.send(reminder.message)
-    # Remove the reminder from the dictionary
-    reminders.pop(reminder.id, None)
-
-
-async def set_reminder(channel, command_input):
-    match = re.match(r"(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}) (.+)", command_input)
-    if not match:
-        await channel.send("Invalid command format. Please use '!reminder YYYY-MM-DD HH:MM Your reminder message.'")
-        return
-
-    date_str, time_str, reminder_msg = match.groups()
-    try:
-        reminder_time = datetime.strptime(f"{date_str} {time_str}", '%Y-%m-%d %H:%M')
-        if reminder_time <= datetime.now():
-            await channel.send("Reminder time must be in the future.")
-            return
-    except ValueError:
-        await channel.send("Invalid time format. Please use 'YYYY-MM-DD HH:MM'.")
-        return
-
-    reminder_id = str(uuid.uuid4())
-    task = asyncio.create_task(remind(channel, Reminder(reminder_id, reminder_time, reminder_msg, None)))
-    reminders[reminder_id] = Reminder(reminder_id, reminder_time, reminder_msg, task)
-    await channel.send(f"Reminder set! I will remind you to '{reminder_msg}' at {time_str} on {date_str} .")
-
-
-async def cancel_reminder(reminder_id):
-    reminder = reminders.pop(reminder_id, None)
-    if reminder:
-        reminder.task.cancel()
-    else:
-        print(f'Message not found, reminder can be sent here')
         
 def closest_command(user_input, command_list):
     # Use get_close_matches to find the closest match
@@ -121,15 +85,15 @@ async def on_command_error(ctx, error):
 @client.command(name='help', help='Displays the help message with a list of available commands.')
 async def custom_help(ctx, *, command_name=None):
     """A custom help command."""
-    if command_name:  # If a specific command is requested, show details about it
-        # Try to find a match among the bot's commands
+    if command_name:
+        #Try to find a match among the bot's existing commands
         command = discord.utils.find(lambda c: c.name == command_name, client.commands)
         if command:
             help_message = f'**{command.name} Command:**\n{command.help}'
             await ctx.send(help_message)
         else:
             await ctx.send(f'No command named "{command_name}" found.')
-    else:  # If no specific command is requested, show general help
+    else:  #If no specific command is requested, show general help
         help_message = '''
         **Reminder Bot Commands:**
         | `!reminder YYYY-MM-DD HH:MM <message>`: Sets a reminder with the specified message at the given date and time.
@@ -143,6 +107,32 @@ async def custom_help(ctx, *, command_name=None):
 @client.command(name='reminder', help='Sets a reminder with the specified message at the given date and time.')
 async def reminder(ctx, *, command_input):
     await set_reminder(ctx.channel, command_input)
+
+async def remind(channel, reminder):
+    await asyncio.sleep((reminder.time - datetime.now()).total_seconds())
+    await channel.send(reminder.message)
+    reminders.pop(reminder.id, None)
+
+async def set_reminder(channel, command_input):
+    match = re.match(r"(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}) (.+)", command_input)
+    if not match:
+        await channel.send("Invalid command format. Please use '!reminder YYYY-MM-DD HH:MM Your reminder message.'")
+        return
+
+    date_str, time_str, reminder_msg = match.groups()
+    try:
+        reminder_time = datetime.strptime(f"{date_str} {time_str}", '%Y-%m-%d %H:%M')
+        if reminder_time <= datetime.now():
+            await channel.send("Reminder time must be in the future.")
+            return
+    except ValueError:
+        await channel.send("Invalid time format. Please use 'YYYY-MM-DD HH:MM'.")
+        return
+
+    reminder_id = str(uuid.uuid4())
+    task = asyncio.create_task(remind(channel, Reminder(reminder_id, reminder_time, reminder_msg, None)))
+    reminders[reminder_id] = Reminder(reminder_id, reminder_time, reminder_msg, task)
+    await channel.send(f"Reminder set! I will remind you to '{reminder_msg}' at {time_str} on {date_str} .")
     
     
 @client.command(name='showreminders', help='Lists all the current reminders set by users.')
@@ -160,13 +150,20 @@ async def showreminders(ctx):
         
 @client.command(name='cancelreminder', help='Cancels the reminder with the specified ID.')
 async def cancelreminder(ctx, reminder_id):
-    # Attempt to cancel the reminder
     reminder = reminders.pop(reminder_id, None)
     if reminder:
         reminder.task.cancel()
         await ctx.channel.send(f"Reminder with ID {reminder_id} has been cancelled.")
     else:
         await ctx.channel.send(f"No reminder found with ID {reminder_id}.")
+
+async def cancel_reminder(reminder_id):
+    reminder = reminders.pop(reminder_id, None)
+    if reminder:
+        reminder.task.cancel()
+    else:
+        print(f'Message not found, reminder can be sent here')
+
 
 def run_bot():
     client.run(TOKEN)
