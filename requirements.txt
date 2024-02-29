@@ -1,0 +1,8 @@
+discord.py==1.7.3
+discord.py[voice]==1.7.3
+yt_dlp==2022.1.1
+PyNaCl==1.4.0
+
+
+#brew install ffmpeg
+#brew install opus
